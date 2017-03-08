@@ -1,6 +1,6 @@
  <!-- Pull Config -->
 
-<?PHP include($_SERVER["DOCUMENT_ROOT"] . "/include/db-connect.php");
+<?php include($_SERVER["DOCUMENT_ROOT"] . "/include/db-connect.php");
 
 #Get Site Orient and Options
 $sth3 = $conn->prepare("SELECT SITE_ORIENT,HIVENAME,SITE_TYPE,SHOW_METRIC FROM hiveconfig");
@@ -15,15 +15,14 @@ $SHOW_METRIC = $result3['SHOW_METRIC'];
 # =====================================================================
 # Set the header
 # =====================================================================
- echo ' 
+ echo '
     <head>
    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Application to manage hive management tasks, and to report on various instruments.">
-    <meta name="author" content="Ryan Crum">
-
-    <title>'; echo $id; echo ' - Hive Control</title>
+    <meta name="author" content="root" >';
+ echo '<title> - Hive Control</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -75,15 +74,11 @@ echo '<nav class="navbar navbar-default navbar-static-top" role="navigation" sty
 #<!-- Wide Orient -->
 
 if ($orient == "wide") {
-
-echo '
-            <ul class="nav navbar-top-links navbar-right">
-                         <li>
-                    <a href="/pages/index.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                </li>
-                    
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+echo '<ul class="nav navbar-top-links navbar-right">
+         <li><a href="/pages/index.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+         </li>
+         <li class="dropdown">
+             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bar-chart-o fa-fw"></i> Detail <i class="fa fa-caret-down"> </i>
                     </a>
                     <ul class="dropdown-menu">
@@ -91,45 +86,35 @@ echo '
                         </li>
                         <li><a href="/pages/weight.php?chart=line&period=week">Weight</a>
                         </li>
-                        <li>
-                            <a href="/pages/light.php?chart=line&period=week">Light</a>
+                        <li><a href="/pages/light.php?chart=line&period=week">Light</a>
                         </li>
-                        <li>
-                            <a href="/pages/gdd.php?chart=line&period=week">GDD</a>
+                        <li><a href="/pages/gdd.php?chart=line&period=week">GDD</a>
                         </li>
-                        <li>
-                            <a href="/pages/beecount.php?chart=line&period=week">Flights</a>
+                        <li><a href="/pages/beecount.php?chart=line&period=week">Flights</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
             
-                 <li>
-                    <a href="/pages/environment.php"><i class="fa fa-table fa-fw"></i>Weather</a>
-                </li>
-                    <li>
-                            <a href="/pages/video.php"><i class="fa fa-video-camera fa-fw"></i>Camera</a>
-                        </li>
-                <li class="dropdown">
+                 <li><a href="/pages/environment.php"><i class="fa fa-table fa-fw"></i>Weather</a>
+                 </li>
+                 <li><a href="/pages/video.php"><i class="fa fa-video-camera fa-fw"></i>Camera</a>
+                 </li>
+                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-gear fa-fw"></i> Settings <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu">
-                        <li>
-                                    <a href="/admin/hiveconfig.php">Basic Config</a>
-                                </li>
-                                <li>
-                                    <a href="/admin/instrumentconfig.php">Instruments</a>
-                                </li>
-                                <li>
-                                    <a href="/admin/hivebodyconfig.php">Hive Components</a>
-                                </li>
-                                <li>
-                                    <a href="/admin/siteconfig.php">Site Preferences</a>
-                                </li>
-                                <li>
-                                    <a href="/admin/system.php">System Commands</a>
-                                </li>
+                        <li><a href="/admin/hiveconfig.php">Basic Config</a>
+                        </li>
+                        <li><a href="/admin/instrumentconfig.php">Instruments</a>
+                        </li>
+                        <li><a href="/admin/hivebodyconfig.php">Hive Components</a>
+                        </li>
+                        <li><a href="/admin/siteconfig.php">Site Preferences</a>
+                        </li>
+                        <li><a href="/admin/system.php">System Commands</a>
+                        </li>
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
