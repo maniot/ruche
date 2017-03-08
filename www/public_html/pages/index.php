@@ -1,5 +1,5 @@
 
-<?PHP
+<?php
 
 //Pass variables to determine the type of view
 
@@ -39,14 +39,12 @@ header("Refresh: $sec; url=$page");
 
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 
     <!-- Header and Navigation -->
-         <?PHP include($_SERVER["DOCUMENT_ROOT"] . "/include/navigation.php"); ?>
+         <?php include($_SERVER["DOCUMENT_ROOT"] . "/include/navigation.php"); ?>
     <!-- /Navigation -->
 
 
@@ -56,7 +54,7 @@ header("Refresh: $sec; url=$page");
         
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Dashboard - <?PHP echo "$recorddate"; ?></h1>
+                    <h1 class="page-header">Dashboard - <?php echo "$recorddate"; ?></h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -197,7 +195,7 @@ header("Refresh: $sec; url=$page");
                         </div>
             <div class="row">
             
-            <?PHP 
+            <?php
             if ($SITE_TYPE == "normal") {
                 echo '<div class="col-lg-8">';
             }
@@ -215,7 +213,7 @@ header("Refresh: $sec; url=$page");
                     </div>
                 </div>
                 <!-- /.col-lg-6 -->
-            <?PHP 
+            <?php
             if ($SITE_TYPE == "normal") {
                 echo '
             
