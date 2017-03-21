@@ -112,12 +112,12 @@ if($v->validate()) {
     $STATUS = test_input($_POST["STATUS"]);
     $COMPUTER = test_input($_POST["COMPUTER"]);
     $START_DATE = test_input($_POST["START_DATE"]);
-    
+    $LANGUAGE = test_input($_POST["LANGUAGE"]);
     $ZIP = test_input($_POST["ZIP"]);
     
     // Update into the DB
-    $doit = $conn->prepare("UPDATE hiveconfig SET hivename=?,hiveid=?,beekeeperid=?,yardid=?,city=?,state=?,country=?,latitude=?,longitude=?,version=?,timezone=?,share_hivetool=?,HT_USERNAME=?,HT_PASSWORD=?,HT_URL=?,GDD_BASE_TEMP=?,GDD_START_DATE=?,POWER=?,INTERNET=?,STATUS=?,COMPUTER=?,START_DATE=?,ZIP=? WHERE id=1");
-    $doit->execute(array($hivename,$hiveid,$beekeeperid,$yardid,$city,$state,$country,$latitude,$longitude,$version,$timezone,$share_hivetool,$HT_USERNAME,$HT_PASSWORD,$HT_URL,$GDD_BASE_TEMP,$GDD_START_DATE,$POWER,$INTERNET,$STATUS,$COMPUTER,$START_DATE,$ZIP));
+    $doit = $conn->prepare("UPDATE hiveconfig SET LANGUAGE=?,hivename=?,hiveid=?,beekeeperid=?,yardid=?,city=?,state=?,country=?,latitude=?,longitude=?,version=?,timezone=?,share_hivetool=?,HT_USERNAME=?,HT_PASSWORD=?,HT_URL=?,GDD_BASE_TEMP=?,GDD_START_DATE=?,POWER=?,INTERNET=?,STATUS=?,COMPUTER=?,START_DATE=?,ZIP=? WHERE id=1");
+    $doit->execute(array($LANGUAGE,$hivename,$hiveid,$beekeeperid,$yardid,$city,$state,$country,$latitude,$longitude,$version,$timezone,$share_hivetool,$HT_USERNAME,$HT_PASSWORD,$HT_URL,$GDD_BASE_TEMP,$GDD_START_DATE,$POWER,$INTERNET,$STATUS,$COMPUTER,$START_DATE,$ZIP));
     sleep(3);
 
     // Refresh the fields in the form
@@ -147,10 +147,10 @@ if($v->validate()) {
                
     }
 
-    if ($GDDSTATUS == "invalid") {
-        echo '<div class="alert alert-danger alert-dismissable">GDD Start Date is greater than 1 year. Please update!</div>';
+ //   if ($GDDSTATUS == "invalid") {
+ //       echo '<div class="alert alert-danger alert-dismissable">GDD Start Date is greater than 1 year. Please update!</div>';
         
-    }
+ //   }
         ?>
     
             <!-- /.row -->
@@ -171,6 +171,22 @@ if($v->validate()) {
                                         </tr>
                                     </thead>
                                     <tbody>
+										
+										<!-- ***************************************************** -->
+
+                                   <tr class="odd gradeX">
+                                        <td>Language</td>
+                                        <td><select name="LANGUAGE" id="LANGUAGE" onchange="this.form.submit()">
+                                        <option value="en_US" <?php if ($result['LANGUAGE'] == "en_US") {echo "selected='selected'";} ?>>English</option>
+                                        <option value="fr_FR" <?php if ($result['LANGUAGE'] == "fr_FR") {echo "selected='selected'";} ?>>Français</option>
+                                        <option value="nl_NL" <?php if ($result['LANGUAGE'] == "nl_NL") {echo "selected='selected'";} ?>>Nederlands</option> 
+                                        </select>
+                                        </td>
+                                        <td>Specify your prefered language</td>
+                                       </tr>
+
+                                   <!-- ***************************************************** -->
+                                   
                                         <tr class="odd gradeX">
                                             <td>Hive Name</td>
                                             <td><input type="text" name="HIVENAME" value="<?PHP echo $result['HIVENAME'];?>" onchange="this.form.submit()"></td>  
@@ -657,32 +673,32 @@ if($v->validate()) {
                                         <td>Beginning date to start calculating GDD each year. - year, month, day (format 20150301) - Recommend the last freezing day. Most people recommend March 1, and most GDD plant values are based on a 3/1 start date. </td>
                                        </tr>
 
-                                   <! ***************************************************** -->
+                                   <!--***************************************************** -->
 
                                    <tr class="odd gradeX">
                                         <td>Power Source</td>
-                                        <td><select name="POWER">
-                                        <option value="AC" <?php if ($result['POWER'] == "AC") {echo "selected='selected'";} ?> onchange="this.form.submit()">AC</option>
+                                        <td><select name="POWER" onchange="this.form.submit()">
+                                        <option value="AC" <?php if ($result['POWER'] == "AC") {echo "selected='selected'";} ?>>AC</option>
                                         <option value="solar" <?php if ($result['POWER'] == "solar") {echo "selected='selected'";} ?>>Solar</option> 
                                         </select>
                                         </td>
                                         <td>Specify if your hive is on AC or solar power</td>
                                        </tr>
 
-                                   <! ***************************************************** -->
+                                   <!-- ***************************************************** -->
 
                                 
                                    <tr class="odd gradeX">
                                         <td>Internet</td>
-                                        <td><select name="INTERNET">
-                                        <option value="wi-fi" <?php if ($result['INTERNET'] == "wi-fi") {echo "selected='selected'";} ?> onchange="this.form.submit()">Wi-Fi</option>
-                                        <option value="ethernet" <?php if ($result['INTERNET'] == "ethernet") {echo "selected='selected'";} ?> onchange="this.form.submit()">Ethernet</option> 
+                                        <td><select name="INTERNET" onchange="this.form.submit()">
+                                        <option value="wi-fi" <?php if ($result['INTERNET'] == "wi-fi") {echo "selected='selected'";} ?>>Wi-Fi</option>
+                                        <option value="ethernet" <?php if ($result['INTERNET'] == "ethernet") {echo "selected='selected'";} ?>>Ethernet</option> 
                                         </select>
                                         </td>
                                         <td>Specify if your hive is using Wi-Fi or Ethernet</td>
                                        </tr>
 
-                                   <! ***************************************************** -->
+                                   <!--***************************************************** -->
 
 
                                    <tr class="odd gradeX">
@@ -696,7 +712,7 @@ if($v->validate()) {
                                         <td>Specify the status of your hive (used for Hivetool.org data reporting).</td>
                                        </tr>
 
-                                   <! ***************************************************** -->
+                                   <!-- ***************************************************** -->
 
                                    <tr class="odd gradeX">
                                         <td>Computer</td>
@@ -709,7 +725,7 @@ if($v->validate()) {
                                         <td>Specify what computing platform you are using (used for Hivetool reporting).</td>
                                    </tr>
 
-                                   <! ***************************************************** -->
+                                   <!-- ***************************************************** -->
 
                                    </tr>
                                        <tr class="odd gradeX">
