@@ -5,6 +5,8 @@
 <?php include($_SERVER["DOCUMENT_ROOT"] . "/include/navigation.php"); ?>
 <!-- /Navigation -->
 
+<?php include($_SERVER["DOCUMENT_ROOT"] . "/language/language.php"); ?>
+
 <?php
  //Get our location settings from the DB
 include($_SERVER["DOCUMENT_ROOT"] . "/include/db-connect.php");
@@ -19,10 +21,13 @@ $state = $result['STATE'];
 $wxstation = $result['WXSTATION'];
 $weather_detail = $result['WEATHER_DETAIL'];
 $SHOW_METRIC = $result['SHOW_METRIC'];
+$language = $result['LANGUAGE'];
+$country_code = substr("$language", -2);
+echo "$language";
 
 if ($weather_detail == "city") {
   $wxlocation = "$state/$city";
- } 
+ }  
  else {
   $wxlocation = "pws:$wxstation";
 }
@@ -39,7 +44,7 @@ if ($SHOW_METRIC == "on") {
   }
 
 // Get Current Conditions from a specific Weather Station
-  $json_string_current = file_get_contents("https://api.wunderground.com/api/$key/conditions/lang:FR/q/$wxlocation.json");
+  $json_string_current = file_get_contents("https://api.wunderground.com/api/$key/conditions/lang:$country_code/q/$wxlocation.json");
   $parsed_json_current = json_decode($json_string_current);
 
   $location= $parsed_json_current->{'current_observation'}->{'display_location'}->{'full'};  
@@ -56,11 +61,11 @@ if ($SHOW_METRIC == "on") {
   $current_weather = $parsed_json_current->{'current_observation'}->{'weather'};
 
 // Get Hourly Forecast - 
-  $json_string_hourly = file_get_contents("https://api.wunderground.com/api/$key/hourly/lang:FR/q/$wxlocation.json");
+  $json_string_hourly = file_get_contents("https://api.wunderground.com/api/$key/hourly/lang:$country_code/q/$wxlocation.json");
   $parsed_json_hourly = json_decode($json_string_hourly);
  
 // Get 10day forecast - used below 
-  $json_string = file_get_contents("https://api.wunderground.com/api/$key/forecast10day/lang:FR/q/$wxlocation.json");
+  $json_string = file_get_contents("https://api.wunderground.com/api/$key/forecast10day/lang:$country_code/q/$wxlocation.json");
   $parsed_json = json_decode($json_string);
 
 if ($SHOW_METRIC == "on") {
@@ -76,7 +81,7 @@ $today_pop = $parsed_json->{'forecast'}->{'simpleforecast'}->{'forecastday'}[0]-
     <div id="wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Weather Forecast</h1>
+                    <h1 class="page-header"><?PHP echo _("Weather Forecast"); ?></h1>
                 </div>
             </div> 
             <div class="row">
@@ -132,7 +137,7 @@ $today_pop = $parsed_json->{'forecast'}->{'simpleforecast'}->{'forecastday'}[0]-
                 <div class="col-lg-8">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            10-Day Forecast
+                            <?PHP echo _("10-Day Forecast"); ?>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -150,12 +155,12 @@ $today_pop = $parsed_json->{'forecast'}->{'simpleforecast'}->{'forecastday'}[0]-
   $icon_url = $parsed_json->{'forecast'}->{'simpleforecast'}->{'forecastday'}[$x]->{'icon_url'};
   $conditions = $parsed_json->{'forecast'}->{'simpleforecast'}->{'forecastday'}[$x]->{'conditions'};
   $pop = $parsed_json->{'forecast'}->{'simpleforecast'}->{'forecastday'}[$x]->{'pop'};
-  echo "<td><center>";
-  echo "${weekday} ${day}/${month} <br>";
-  echo "<font color=\"red\">${high}</font> | <font color=\"blue\">${low} </font><BR>";
-  echo "<img class=\"img-responsive\" src=\"${icon_url}\"> <BR>";
-  echo "${conditions} <br>";
-  echo "<font size=\"1\" color=\"blue\">${pop}% </font><br></center>";
+  echo "<td colspan=1><center>";
+  echo "<div>${weekday} ${day}/${month} <br></div>";
+  echo "<div><font color=\"red\">${high}</font> | <font color=\"blue\">${low} </font><br></div>";
+  echo "<div><img class=\"img-responsive\" src=\"${icon_url}\"> <br></div>";
+  echo "<div>${conditions} </div><br>";
+  echo "<div><font size=\"1\" color=\"blue\">${pop}% </font><br></div></center>";
   echo "</td>";
   $x++;
 }
@@ -170,6 +175,7 @@ $today_pop = $parsed_json->{'forecast'}->{'simpleforecast'}->{'forecastday'}[0]-
                 </div>
             </div>
          </div>
+
 
 <!-- jQuery -->
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
